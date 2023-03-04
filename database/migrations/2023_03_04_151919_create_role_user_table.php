@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('content');
-            $table->dateTime('created_at');
-            $table->integer('likes_count');
-            $table->integer('dislikes_count');
-            $table->integer('views_count');
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->primary(['role_id', 'user_id']);
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->unsignedBigInteger('user_id');
+            $table->foreign('role_id')->references('id')->on('roles')
+                ->onDelete('cascade')->onUpdate('cascade');
+
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('role_user');
     }
 };

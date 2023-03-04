@@ -16,6 +16,10 @@ return new class extends Migration
             $table->dateTime('created_at');
             $table->text('body');
             $table->timestamps();
+
+            $table->unsignedBigInteger('post_id');
+            $table->foreign('post_id')->references('id')->on('posts')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
