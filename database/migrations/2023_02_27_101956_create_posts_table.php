@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->dateTime('created_at');
             $table->integer('likes_count');
             $table->integer('dislikes_count');
             $table->integer('views_count');

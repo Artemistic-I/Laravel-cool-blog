@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('created_at');
             $table->text('body');
             $table->timestamps();
 
