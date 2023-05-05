@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
                 $user->roles()->attach($role);
             }
         }
+        //seeding everything else
         \App\Models\Post::factory(100)->create();
         \App\Models\Image::factory(70)->create();
         \App\Models\Comment::factory(200)->create();

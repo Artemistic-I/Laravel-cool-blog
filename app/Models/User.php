@@ -50,21 +50,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
-
-    // public function hasRole($role_id)
-    // {
-    //     $roles = $this->roles;
-    
-    //     if ($roles->isEmpty()) {
-    //         return false;
-    //     }
-        
-    //     foreach ($roles as $role) {
-    //         if ($role->id == $role_id) {
-    //             return true;
-    //         }
-    //     }
-        
-    //     return false;
-    // }
 }
