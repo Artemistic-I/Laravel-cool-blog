@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
         }
         //seeding everything else
         \App\Models\Post::factory(100)->create();
-        \App\Models\Image::factory(70)->create();
-        \App\Models\Comment::factory(200)->create();
+        \App\Models\Image::factory(100)->create();
+        \App\Models\Comment::factory(1000)->create();
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

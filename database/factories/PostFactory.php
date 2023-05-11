@@ -17,13 +17,13 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            "title" => fake()->sentence(),
-            "content" => fake()->paragraphs(rand(3, 6), true),
+            "title" => fake()->realText($maxNbChars = 100, $indexSize = 2),
+            "content" => fake()->realText($maxNbChars = 1000, $indexSize = 2),
             "created_at" => fake()->dateTimeBetween('-1 month', 'now'),
             "updated_at" => fake()->dateTimeBetween('-1 month', 'now'),
-            "likes_count" => fake()->numberBetween(0, \App\Models\User::get()->count()),
-            "dislikes_count" => fake()->numberBetween(0, \App\Models\User::get()->count()),
-            "views_count" => fake()->numberBetween(0, \App\Models\User::get()->count()),
+            "likes_count" => $likes = fake()->numberBetween(0, \App\Models\User::get()->count()),
+            "dislikes_count" => $dislikes = fake()->numberBetween(0, \App\Models\User::get()->count() - $likes),
+            "views_count" => fake()->numberBetween($likes + $dislikes, \App\Models\User::get()->count()),
             "user_id" => \App\Models\User::inRandomOrder()->first()->id,
         ];
     }

@@ -19,8 +19,9 @@ class CommentFactory extends Factory
         return [
             "created_at" => fake()->dateTimeBetween('-1 month', 'now'),
             "updated_at" => fake()->dateTimeBetween('-1 month', 'now'),
-            "body" => fake()->sentences(rand(1,4), true),
+            "body" => fake()->realText(fake()->numberBetween(10, 200),2),
             "post_id" => \App\Models\Post::inRandomOrder()->first()->id,
+            "user_id" => \App\Models\User::inRandomOrder()->first()->id,
         ];
     }
 }
