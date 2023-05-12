@@ -3,6 +3,8 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,24 @@ Route::get('/posts/create', [PostController::class, 'create'])->name('posts.crea
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+//Route::get('/storage/{filename}', [App\Http\Controllers\ImageController::class, 'show'])->where('filename', '^[^/]+$');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/storage/images/{filename}', function ($filename) {
+//     $path = storage_path('app/public/images/' . $filename);
 
+//     if (!Storage::exists($path)) {
+//         abort(404);
+//     }
+
+//     $file = Storage::get($path);
+//     $type = Storage::mimeType($path);
+
+//     return Response::make($file, 200, ['Content-Type' => $type]);
+// })->where('filename', '.*');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

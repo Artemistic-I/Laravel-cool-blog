@@ -7,6 +7,9 @@
 @if (session()->has('message'))
     <p><b>{{ session('message') }}</b></p>
 @endif
+@if (session()->has('myurl'))
+    <p><b>{{ session('myurl') }}</b></p>
+@endif
 <h2 style="color: orange;">Recent posts</h2>
 @foreach($posts as $post)
 Title: <a href="{{route('posts.show', ['id' => $post->id])}}">{{$post->title}}</a></br>
@@ -16,7 +19,7 @@ Title: <a href="{{route('posts.show', ['id' => $post->id])}}">{{$post->title}}</
 </p>
 
 @foreach($post->images as $image)
-<img src="{{$image->url}}" alt="Can't load image: {{$image->url}}">
+<img src="{{ asset($image->url) }}" alt="Can't load image: {{$image->url}}" width=400>
 @endforeach
 <ul>
     <li>Views: {{$post->views_count}}</li>

@@ -4,15 +4,17 @@
 
 @section('content')
     <!-- <script>
-        // Your AJAX code here
+        // 
     </script> -->
-    <form method="POST" action="{{route('posts.store')}}">
+    <form method="POST" action="{{route('posts.store')}}" enctype="multipart/form-data">
     @csrf
     <label for="title">Title:</label><br>
     <input type="text" id="title" name="title" value="{{old('title')}}"><br>
     <label for="content">Content:</label><br>
     <input type="text" id="content" name="content" value="{{old('content')}}"><br>
 
+    <label for="image1">Image upload jpg,png,gif (optional)</label><br>
+    <input type="file" name="image"></br>
     <label for="image1">Image 1 URL (optional):</label><br>
     <input type="text" id="image1" name="image1" value="{{old('image1')}}"><br>
     <label for="image2">Image 2 URL (optional):</label><br>

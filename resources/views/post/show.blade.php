@@ -14,7 +14,7 @@
         Date: {{$post->created_at}}</br></br>
         Title: {{$post->title ?? "unknown"}}</br></br>
         @foreach($post->images as $image)
-            <img src="{{$image->url}}" alt="{{$image->url}}"></br></br>
+            <img src="{{ asset($image->url) }}" alt="{{$image->url}}" width=400></br></br>
         @endforeach
         Content: {{$post->content ?? "unknown"}}</br>
         Likes: {{$post->likes_count ?? "unknown"}}</br>

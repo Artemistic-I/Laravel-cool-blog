@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Image;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
@@ -34,6 +36,7 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'image' => 'nullable|file|mimes:jpeg,png,gif',
             'image1' => 'nullable',
             'image2' => 'nullable',
             'image3' => 'nullable',
@@ -64,6 +67,20 @@ class PostController extends Controller
             $i->post_id = $p->id;
             $i->url = $validatedData['image3'];
             $i->save();
+        }
+        if ($request->hasFile('image')) {
+            // $image = $request->file('image');
+            // $filename = time() . '.' . $image->getClientOriginalExtension();
+
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = 'images/' . $filename;
+            $i->save();
+            session()->flash('myurl', 'images/' . $filename);
         }
         session()->flash('message', 'Post was created');
         return redirect()->route('posts.index');
@@ -100,6 +117,19 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
+        $images = $post->images;
+        foreach ($images as $image) {
+            // Check if the url is a local path (doesn't start with 'http')
+            if (!Str::startsWith($image->url, 'http')) {
+                // Delete image file
+                $imagePath = public_path($image->url);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            // Delete image record
+            $image->delete();
+        }
         $post->delete();
         return redirect()->route('posts.index')->with('message', 'Post was deleted');
     }
