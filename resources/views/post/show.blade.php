@@ -3,11 +3,22 @@
 @section('title', 'Post timeline')
 
 @section('content')
-    <form method="POST" action="{{route('posts.destroy', ['id'=>$post->id])}}">
-        @csrf
-        @method('DELETE')
-        <button type="submit">Delete post</button>
-    </form>
+    </b><a href="{{route('posts.index')}}">Back to all posts</a></br></br>
+    @auth
+        <form method="POST" action="{{route('posts.destroy', ['id'=>$post->id])}}">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete post</button>
+        </form></br>
+        <form method="GET" action="{{route('posts.edit', ['id'=>$post->id])}}">
+            @csrf
+            <button type="submit">Edit post</button>
+        </form>
+    @endauth
+
+    @guest
+        <p style="color: red;">You need to login/register to edit or delete posts</p>
+    @endguest
     <p>
         Post id = {{$post->id}}</br>
         Posted by {{$post->user->name}}</br>

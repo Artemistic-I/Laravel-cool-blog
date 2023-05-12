@@ -74,13 +74,13 @@ class PostController extends Controller
 
             $file = $request->file('image');
             $filename = $file->getClientOriginalName();
-            $file->move(public_path('images'), $filename);
+            $file->move(public_path('pictures'), $filename);
 
             $i = new Image;
             $i->post_id = $p->id;
-            $i->url = 'images/' . $filename;
+            $i->url = 'pictures/' . $filename;
             $i->save();
-            session()->flash('myurl', 'images/' . $filename);
+            session()->flash('myurl', 'pictures/' . $filename);
         }
         session()->flash('message', 'Post was created');
         return redirect()->route('posts.index');
@@ -100,7 +100,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('post.edit', ['post'=>$post]); 
     }
 
     /**
@@ -108,7 +109,53 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'nullable|file|mimes:jpeg,png,gif',
+            'image1' => 'nullable',
+            'image2' => 'nullable',
+            'image3' => 'nullable',
+        ]);
+        $p = $post = Post::findOrFail($id);
+        $p->title = $validatedData['title'];
+        $p->content = $validatedData['content'];
+        $p->save();
+        if ($validatedData['image1'] !== null) {
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = $validatedData['image1'];
+            $i->save();
+        }
+        if ($validatedData['image2'] !== null) {
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = $validatedData['image2'];
+            $i->save();
+        }
+    
+        if ($validatedData['image3'] !== null) {
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = $validatedData['image3'];
+            $i->save();
+        }
+        if ($request->hasFile('image')) {
+            // $image = $request->file('image');
+            // $filename = time() . '.' . $image->getClientOriginalExtension();
+
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $file->move(public_path('pictures'), $filename);
+
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = 'pictures/' . $filename;
+            $i->save();
+            session()->flash('myurl', 'pictures/' . $filename);
+        }
+        session()->flash('message', 'Post has been updated');
+        return redirect()->route('posts.index');
     }
 
     /**

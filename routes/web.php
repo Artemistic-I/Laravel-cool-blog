@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -29,9 +30,15 @@ Route::get('/timeline/{date?}', function ($date = null) {
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 
+Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');
+
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+Route::delete('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
 //Route::get('/storage/{filename}', [App\Http\Controllers\ImageController::class, 'show'])->where('filename', '^[^/]+$');
 
 

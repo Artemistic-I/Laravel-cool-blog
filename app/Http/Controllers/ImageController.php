@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Image;
+use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
@@ -59,6 +61,17 @@ class ImageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $image = Image::findOrFail($id);
+        $post_id = $image->post_id;
+        if (!Str::startsWith($image->url, 'http')) {
+            // Delete image file
+            $imagePath = public_path($image->url);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        // Delete image record
+        $image->delete();
+        return redirect()->route('posts.edit', ['id'=>$post_id])->with('message', 'Image was deleted');
     }
 }

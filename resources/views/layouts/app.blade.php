@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Artems blog') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,19 +27,9 @@
                 </header>
             @endif
         </div>
-        <div>
+        <div class="page-content">
             <!-- Page Content -->
-            <style>
-                main {
-                    background-color: darkblue;
-                }
-                a {
-                    color: white;
-                }
-                .errors {
-                    color: red;
-                }
-            </style>
+            
             <main>
                 @if($errors->any())
                 <div class="errors">
@@ -59,5 +49,17 @@
             
             </main>
         </div>
+            <style>
+                .page-content {
+                    background-color: darkblue;
+                }
+                .page-content a {
+                    color: white;
+                }
+                .page-content .errors {
+                    color: red;
+                }
+            </style>
+        
     </body>
 </html>
