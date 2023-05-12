@@ -1,14 +1,18 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title', 'Post timeline')
 
 @section('content')
-<a href="{{route('posts.create')}}">Create post</a>
+@auth
+    <a href="{{route('posts.create')}}">Create post</a></br>
+@endauth
+
+@guest
+    <p style="color: red;">You need to login/register to create a post</p>
+@endguest
+
 @if (session()->has('message'))
-    <p><b>{{ session('message') }}</b></p>
-@endif
-@if (session()->has('myurl'))
-    <p><b>{{ session('myurl') }}</b></p>
+    <p style="color: green;"><b>{{ session('message') }}</b></p>
 @endif
 <h2 style="color: orange;">Recent posts</h2>
 @foreach($posts as $post)

@@ -14,8 +14,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <body>
+        <div class="min-h-s bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -26,10 +26,37 @@
                     </div>
                 </header>
             @endif
-
+        </div>
+        <div>
             <!-- Page Content -->
+            <style>
+                main {
+                    background-color: darkblue;
+                }
+                a {
+                    color: white;
+                }
+                .errors {
+                    color: red;
+                }
+            </style>
             <main>
-                {{ $slot }}
+                @if($errors->any())
+                <div class="errors">
+                    Errors:
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>error: {{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <h1 style="color: orange;">Artems blog  @yield('title')</h1>
+
+                <div style="color: orange;">
+                    @yield('content')
+                </div>
+            
             </main>
         </div>
     </body>
