@@ -5,7 +5,8 @@
 @section('content')
     <p>
         Post id = {{$post->id}}</br>
-        Posted by {{$post->user->name}}</br></br>
+        Posted by {{$post->user->name}}</br>
+        Date: {{$post->created_at}}</br></br>
         Title: {{$post->title ?? "unknown"}}</br></br>
         @foreach($post->images as $image)
             <img src="{{$image->url}}" alt="{{$image->url}}"></br></br>

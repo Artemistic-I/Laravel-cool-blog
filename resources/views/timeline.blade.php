@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <title>Post timeline</title>
     </head>
     <body>

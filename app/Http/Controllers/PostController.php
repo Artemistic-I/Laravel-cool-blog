@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Image;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -12,8 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('post.index', ['posts'=>$posts]);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(15);
+        return view('post.index', ['posts' => $posts]);
     }
 
     /**
@@ -21,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
@@ -29,7 +31,41 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image1' => 'nullable',
+            'image2' => 'nullable',
+            'image3' => 'nullable',
+        ]);
+        $p = new Post;
+        $p->title = $validatedData['title'];
+        $p->content = $validatedData['content'];
+        $p->likes_count = 0;
+        $p->dislikes_count = 0;
+        $p->views_count = 0;
+        $p->user_id = auth()->id();
+        $p->save();
+        if ($validatedData['image1'] !== null) {
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = $validatedData['image1'];
+            $i->save();
+        }
+        if ($validatedData['image2'] !== null) {
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = $validatedData['image2'];
+            $i->save();
+        }
+    
+        if ($validatedData['image3'] !== null) {
+            $i = new Image;
+            $i->post_id = $p->id;
+            $i->url = $validatedData['image3'];
+            $i->save();
+        }
+        return redirect()->route('posts.index');
     }
 
     /**
