@@ -3,6 +3,11 @@
 @section('title', 'Post timeline')
 
 @section('content')
+    <form method="POST" action="{{route('posts.destroy', ['id'=>$post->id])}}">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Delete post</button>
+    </form>
     <p>
         Post id = {{$post->id}}</br>
         Posted by {{$post->user->name}}</br>

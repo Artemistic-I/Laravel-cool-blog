@@ -13,11 +13,11 @@
     <label for="content">Content:</label><br>
     <input type="text" id="content" name="content" value="{{old('content')}}"><br>
 
-    <label for="image1">Image 1 URL:</label><br>
+    <label for="image1">Image 1 URL (optional):</label><br>
     <input type="text" id="image1" name="image1" value="{{old('image1')}}"><br>
-    <label for="image2">Image 2 URL:</label><br>
+    <label for="image2">Image 2 URL (optional):</label><br>
     <input type="text" id="image2" name="image2" value="{{old('image2')}}"><br>
-    <label for="image3">Image 3 URL:</label><br>
+    <label for="image3">Image 3 URL (optional):</label><br>
     <input type="text" id="image3" name="image3" value="{{old('image3')}}"><br>
     <input type="submit" value="Submit"><br>
     </form>

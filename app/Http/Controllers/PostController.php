@@ -65,6 +65,7 @@ class PostController extends Controller
             $i->url = $validatedData['image3'];
             $i->save();
         }
+        session()->flash('message', 'Post was created');
         return redirect()->route('posts.index');
     }
 
@@ -98,6 +99,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect()->route('posts.index')->with('message', 'Post was deleted');
     }
 }

@@ -4,6 +4,9 @@
 
 @section('content')
 <a href="{{route('posts.create')}}">Create post</a>
+@if (session()->has('message'))
+    <p><b>{{ session('message') }}</b></p>
+@endif
 <h2 style="color: orange;">Recent posts</h2>
 @foreach($posts as $post)
 Title: <a href="{{route('posts.show', ['id' => $post->id])}}">{{$post->title}}</a></br>
