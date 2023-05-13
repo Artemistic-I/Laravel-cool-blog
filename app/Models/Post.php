@@ -21,4 +21,24 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function likes()
+    {
+        return $this->morphToMany('App\Models\User', 'interaction')
+            ->wherePivot('status', 'like')
+            ->withTimestamps();
+    }
+
+    public function dislikes()
+    {
+        return $this->morphToMany('App\Models\User', 'interaction')
+            ->wherePivot('status', 'dislike')
+            ->withTimestamps();
+    }
+
+    public function views()
+    {
+        return $this->morphToMany('App\Models\User', 'interaction')
+            ->wherePivot('status', 'view')
+            ->withTimestamps();
+    }
 }

@@ -13,9 +13,12 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        
         @livewireStyles
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    <body>
+    <body class="page-content">
         @livewireScripts
         <div class="min-h-s bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
@@ -29,7 +32,7 @@
                 </header>
             @endif
         </div>
-        <div class="page-content">
+        <div>
             <!-- Page Content -->
             
             <main>

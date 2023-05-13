@@ -17,4 +17,25 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function likes()
+    {
+        return $this->morphToMany('App\Models\User', 'interaction')
+            ->wherePivot('status', 'like')
+            ->withTimestamps();
+    }
+
+    public function dislikes()
+    {
+        return $this->morphToMany('App\Models\User', 'interaction')
+            ->wherePivot('status', 'dislike')
+            ->withTimestamps();
+    }
+
+    public function views()
+    {
+        return $this->morphToMany('App\Models\User', 'interaction')
+            ->wherePivot('status', 'view')
+            ->withTimestamps();
+    }
 }

@@ -76,18 +76,6 @@
             margin-bottom: 20px;
         }
 
-        .post-stats {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .post-stats li {
-            display: inline-block;
-            margin-right: 10px;
-            font-size: 14px;
-            color:#4287f5;
-        }
     </style>
     <div class="post-details">
     <a class="back-link" href="{{ route('posts.index') }}">Back to all posts</a><br><br>
@@ -118,11 +106,7 @@
         @endforeach
     </div>
     <p class="post-content">{{ $post->content ?? 'Unknown' }}</p>
-    <ul class="post-stats">
-        <li>Likes: {{ $post->likes_count ?? 'Unknown' }}</li>
-        <li>Dislikes: {{ $post->dislikes_count ?? 'Unknown' }}</li>
-        <li>Views: {{ $post->views_count ?? 'Unknown' }}</li>
-    </ul>
+    <livewire:post-interactions :post_id="$post->id"/>
 </div>
     <livewire:add-comment :post_id="$post->id" :user_id="auth()->id()" /></br>
 @endsection

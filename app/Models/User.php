@@ -54,4 +54,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function interactedPosts()
+    {
+        return $this->morphedByMany(Post::class, 'interaction')
+            ->withTimestamps();
+    }
+
+    public function interactedComments()
+    {
+        return $this->morphedByMany(Comment::class, 'interaction')
+            ->withTimestamps();
+    }
 }

@@ -15,6 +15,8 @@
         border-radius: 4px;
         cursor: pointer;
         margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 10px;
     }
     .comment-card {
         border: 1px solid aqua;
@@ -37,7 +39,6 @@
         font-weight: bold;
         font-size: 18px;
         color:darkorange;
-        margin-right: 70%;
     }
 </style>
     <h3 class="comment-title">Comments</h3>
@@ -59,9 +60,9 @@
                             <input class="form-control" type="text" wire:model="editedComment" />
                             <button class="mybutton" wire:click="updateComment({{ $comment->id }})">Save</button>
                         @else
-                            <span class="comment-author">{{$comment->user->name}}</span>
                             <button class="mybutton" wire:click="editComment({{ $comment->id }})">Edit</button>
-                            <button class="mybutton" wire:click="deleteComment({{ $comment->id }})">Delete</button>
+                            <button class="mybutton" wire:click="deleteComment({{ $comment->id }})">Delete</button></br>
+                            <span class="comment-author">{{$comment->user->name}}</span>
                             <p class="comment-text">{{$comment->body}}</p>
                         @endif
                     @else

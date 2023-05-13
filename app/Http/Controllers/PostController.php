@@ -92,6 +92,8 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = Post::findOrFail($id);
+        $post->views_count = $post->views_count + 1;
+        $post->save();
         return view('post.show', ['post'=>$post]);
     }
 
