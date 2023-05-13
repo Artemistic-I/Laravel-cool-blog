@@ -33,33 +33,5 @@
         Views: {{$post->views_count ?? "unknown"}}</br>
     </p>
     <h3>Comments</h3>
-    @auth
-        <form method="POST" action="{{route('comments.store')}}">
-            @csrf
-            <textarea id="body" name="body" style="width: 50%; height: 50px;"></textarea></br>
-            <input type="hidden" name="user_id" value="{{auth()->id()}}">
-            <input type="hidden" name="post_id" value="{{$post->id}}">
-            <button type="submit">Publish comment</button>
-        </form></br>
-    @endauth
-
-    @guest
-        <p style="color: red;">You need to login/register to add a comment</p>
-    @endguest
-
-    @foreach($post->comments as $comment)
-        @auth
-            <p>
-                User: {{$comment->user->name}}</br>
-                {{$comment->body}}
-            </p>
-        @endauth
-
-        @guest
-            <p>
-                User: {{$comment->user->name}}</br>
-                {{$comment->body}}
-            </p>
-        @endguest
-    @endforeach
+    <livewire:add-comment :post_id="$post->id" :user_id="auth()->id()" />
 @endsection

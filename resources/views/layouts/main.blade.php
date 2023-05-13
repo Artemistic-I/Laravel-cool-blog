@@ -14,8 +14,10 @@
                 color: red;
             }
         </style>
+        @livewireStyles
     </head>
     <body>
+        @livewireScripts
         @if($errors->any())
             <div class="errors">
                 Errors:
