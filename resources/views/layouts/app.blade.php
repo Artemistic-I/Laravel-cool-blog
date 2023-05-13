@@ -43,25 +43,18 @@
                     </ul>
                 </div>
                 @endif
-                <h1 style="color: orange;">Artems blog  @yield('title')</h1>
-
-                <div style="color: orange;">
+                <h1 style="color: aqua; text-align: center; font-size: 28px;">Artems blog - @yield('title')</h1>
+                <div style="color:goldenrod;">
                     @yield('content')
                 </div>
-            
+                <style>
+                    .page-content {
+                        background-color:#1f4e8c;
+                    }
+                </style>
             </main>
         </div>
-            <style>
-                .page-content {
-                    background-color: darkblue;
-                }
-                .page-content a {
-                    color: white;
-                }
-                .page-content .errors {
-                    color: red;
-                }
-            </style>
+            
         
     </body>
 </html>

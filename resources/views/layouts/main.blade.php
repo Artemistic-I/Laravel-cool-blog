@@ -4,19 +4,13 @@
 
         <title>Artems blog - @yield('title')</title>
         <style>
-            body {
-                background-color: darkblue;
-            }
-            a {
-                color: white;
-            }
-            .errors {
-                color: red;
+            .page-content {
+                background-color:#1f4e8c;
             }
         </style>
         @livewireStyles
     </head>
-    <body>
+    <body class="page-content">
         @livewireScripts
         @if($errors->any())
             <div class="errors">
@@ -28,7 +22,7 @@
                 </ul>
             </div>
         @endif
-        <h1 style="color: orange;">Artems blog - @yield('title')</h1>
+        <h1 style="color: aqua; text-align: center">Artems blog - @yield('title')</h1>
 
         <div style="color: orange;">
             @yield('content')
