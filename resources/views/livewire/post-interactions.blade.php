@@ -39,6 +39,7 @@
         <li>Dislikes: {{ $post->dislikes_count ?? 'Unknown' }}</li>
         <li>Views: {{ $post->views_count ?? 'Unknown' }}</li>
     </ul>
+    @auth
     <div>
         <button class="like-button {{ $likeButtonActive ? 'clicked' : '' }}" wire:click="like" alt="Like">
             Like <i class="fa fa-thumbs-up" style="font-size:24px;"></i>
@@ -47,4 +48,5 @@
             Dislike <i class="fa fa-thumbs-down" style="font-size:24px;"></i>
         </button>
     </div>
+    @endauth
 </div>

@@ -37,9 +37,10 @@ class PostInteractions extends Component
         $user = User::find(auth()->id());
         $isLikedPost = $user->interactedPosts()->where('status', 'like')->where('interaction_id', $this->post->id)->count() > 0;
         $isDislikedPost = $user->interactedPosts()->where('status', 'dislike')->where('interaction_id', $this->post->id)->count() > 0;
+        
         if($isLikedPost) {
             //remove like
-            $user->interactedPosts()->detach($this->post->id);
+            $user->interactedPosts()->updateExistingPivot($this->post->id, ['status' => 'view']);
             $this->likeButtonActive = false;
 
             $this->post->likes_count--;
@@ -57,7 +58,7 @@ class PostInteractions extends Component
                 $this->post->save();
             } else {
                 //add a like
-                $user->interactedPosts()->attach($this->post->id, ['status' => 'like']);
+                $user->interactedPosts()->updateExistingPivot($this->post->id, ['status' => 'like']);
                 $this->likeButtonActive = true;
 
                 $this->post->likes_count++;
@@ -74,7 +75,7 @@ class PostInteractions extends Component
         $isDislikedPost = $user->interactedPosts()->where('status', 'dislike')->where('interaction_id', $this->post->id)->count() > 0;
         if($isDislikedPost) {
             //remove dislike
-            $user->interactedPosts()->detach($this->post->id);
+            $user->interactedPosts()->updateExistingPivot($this->post->id, ['status' => 'view']);
             $this->dislikeButtonActive = false;
 
             $this->post->dislikes_count--;
@@ -92,7 +93,7 @@ class PostInteractions extends Component
                 $this->post->save();
             } else {
                 //add a dislike
-                $user->interactedPosts()->attach($this->post->id, ['status' => 'dislike']);
+                $user->interactedPosts()->updateExistingPivot($this->post->id, ['status' => 'dislike']);
                 $this->dislikeButtonActive = true;
 
                 $this->post->dislikes_count++;

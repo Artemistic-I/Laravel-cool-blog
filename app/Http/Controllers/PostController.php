@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -92,8 +93,15 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = Post::findOrFail($id);
-        $post->views_count = $post->views_count + 1;
-        $post->save();
+        if(auth()->check()) {
+            $user = User::find(auth()->id());
+            $isViewedPost = $user->interactedPosts()->where('interaction_id', $id)->count() > 0;
+            if(!$isViewedPost) {
+                $post->views_count = $post->views_count + 1;
+                $post->save();
+                $user->interactedPosts()->attach($id, ['status' => 'view']);
+            }
+        }
         return view('post.show', ['post'=>$post]);
     }
 
@@ -178,6 +186,11 @@ class PostController extends Controller
             }
             // Delete image record
             $image->delete();
+        }
+        $user = User::find($post->user->id);
+        $isViewedPost = $user->interactedPosts()->where('interaction_id', $id)->count() > 0;
+        if($isViewedPost) {
+            $user->interactedPosts()->detach($id);
         }
         $post->delete();
         return redirect()->route('posts.index')->with('message', 'Post was deleted');
