@@ -13,8 +13,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body>
+        @livewireScripts
         <div class="min-h-s bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 

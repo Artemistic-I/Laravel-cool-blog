@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -33,30 +34,18 @@ Route::get('/posts/create', [PostController::class, 'create'])->name('posts.crea
 Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');
 
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::delete('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-//Route::get('/storage/{filename}', [App\Http\Controllers\ImageController::class, 'show'])->where('filename', '^[^/]+$');
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-// Route::get('/storage/images/{filename}', function ($filename) {
-//     $path = storage_path('app/public/images/' . $filename);
 
-//     if (!Storage::exists($path)) {
-//         abort(404);
-//     }
-
-//     $file = Storage::get($path);
-//     $type = Storage::mimeType($path);
-
-//     return Response::make($file, 200, ['Content-Type' => $type]);
-// })->where('filename', '.*');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

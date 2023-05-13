@@ -3,6 +3,7 @@
 @section('title', 'Post timeline')
 
 @section('content')
+    <div>
     @auth
         </b><a href="{{route('posts.create')}}">Create post</a></br>
     @endauth
@@ -33,4 +34,5 @@
 
     @endforeach
     {{$posts->links()}}
+    </div>
 @endsection
