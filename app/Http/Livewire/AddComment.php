@@ -6,7 +6,9 @@ use Livewire\Component;
 use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Comment;
+use App\Notifications\LikeOrCommentNotification;
 
 class AddComment extends Component
 {
@@ -39,6 +41,17 @@ class AddComment extends Component
 
         // Update the list of items
         $this->commentsOnPost = Comment::where('post_id', $this->post_id)->orderBy('created_at', 'desc')->get();
+
+        //send email notification to the post author
+        
+        $post = Post::find($this->post_id);
+        if (auth()->id() != $post->user->id) {
+            $post_title = $post->title;
+            $message = "Someone commented on your post: $post_title";
+            $user = User::find($post->user->id);
+            $notification = new LikeOrCommentNotification($message, $this->post_id);
+            $user->notify($notification);
+        }
     }
 
     public function editComment($commentId)

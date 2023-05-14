@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\LikeOrCommentNotification;
 
 class PostInteractions extends Component
 {
@@ -63,6 +64,15 @@ class PostInteractions extends Component
 
                 $this->post->likes_count++;
                 $this->post->save();
+            }
+            //send email notification to the post author
+            $post = Post::find($this->post_id);
+            if (auth()->id() != $post->user->id) {
+                $post_title = $post->title;
+                $message = "Someone LIKED your post: $post_title";
+                $user = User::find($post->user->id);
+                $notification = new LikeOrCommentNotification($message, $this->post_id);
+                $user->notify($notification);
             }
         }
         
