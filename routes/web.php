@@ -25,22 +25,18 @@ Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index']);
 //     return view('welcome');
 // });
 
-Route::get('/timeline/{date?}', function ($date = null) {
-    return view('timeline', ['date'=>$date]);
-});
-
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/create', [PostController::class, 'create'])->middleware(['auth', 'verified'])->name('posts.create');
 
-Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');
+Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->middleware(['auth', 'verified'])->name('posts.edit');
 
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+Route::post('/comments', [CommentController::class, 'store'])->middleware(['auth', 'verified'])->name('comments.store');
+Route::put('/posts/{id}', [PostController::class, 'update'])->middleware(['auth', 'verified'])->name('posts.update');
 
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
-Route::delete('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::delete('/images/{id}', [ImageController::class, 'destroy'])->middleware(['auth', 'verified'])->name('images.destroy');
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware(['auth', 'verified'])->name('posts.destroy');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.index');

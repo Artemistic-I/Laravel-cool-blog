@@ -91,15 +91,17 @@
     <div class="post-details">
     <a class="back-link" href="{{ route('posts.index') }}">Back to all posts</a><br><br>
     @auth
-        <form class="delete-form" method="POST" action="{{ route('posts.destroy', ['id'=>$post->id]) }}">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="delete-button">Delete post</button>
-        </form>
-        <form class="edit-form" method="GET" action="{{ route('posts.edit', ['id'=>$post->id]) }}">
-            @csrf
-            <button type="submit" class="edit-button">Edit post</button>
-        </form>
+        @if(auth()->id() == $post->user->id)
+            <form class="delete-form" method="POST" action="{{ route('posts.destroy', ['id'=>$post->id]) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="delete-button">Delete post</button>
+            </form>
+            <form class="edit-form" method="GET" action="{{ route('posts.edit', ['id'=>$post->id]) }}">
+                @csrf
+                <button type="submit" class="edit-button">Edit post</button>
+            </form>
+        @endif
     @endauth
 
     @guest
