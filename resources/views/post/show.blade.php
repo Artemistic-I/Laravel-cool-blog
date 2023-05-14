@@ -91,7 +91,7 @@
     <div class="post-details">
     <a class="back-link" href="{{ route('posts.index') }}">Back to all posts</a><br><br>
     @auth
-        @if(auth()->id() == $post->user->id)
+        @if(auth()->id() == $post->user->id || auth()->user()->roles->where('name','admin')->count() > 0)
             <form class="delete-form" method="POST" action="{{ route('posts.destroy', ['id'=>$post->id]) }}">
                 @csrf
                 @method('DELETE')

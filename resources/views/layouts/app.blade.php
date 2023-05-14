@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        
+
         @livewireStyles
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
@@ -51,6 +51,10 @@
                     @yield('content')
                 </div>
                 <style>
+                    .errors {
+                        color:red;
+                        text-align: center;
+                    }
                     .page-content {
                         background-color:#1f4e8c;
                     }

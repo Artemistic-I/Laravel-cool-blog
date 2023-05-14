@@ -35,7 +35,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required',
+            'title' => 'required|max:255',
             'content' => 'required',
             'image' => 'nullable|file|mimes:jpeg,png,gif',
             'image1' => 'nullable',
@@ -120,7 +120,7 @@ class PostController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'title' => 'required',
+            'title' => 'required|max:255',
             'content' => 'required',
             'image' => 'nullable|file|mimes:jpeg,png,gif',
             'image1' => 'nullable',

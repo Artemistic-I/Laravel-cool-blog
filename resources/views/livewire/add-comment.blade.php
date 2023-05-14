@@ -55,7 +55,7 @@
         @foreach ($commentsOnPost as $comment)
             <div class="comment-card">
                 @auth
-                    @if(auth()->id() == $comment->user_id)
+                    @if(auth()->id() == $comment->user_id || auth()->user()->roles->where('name','admin')->count() > 0)
                         @if ($comment->id === $editCommentId)
                             <input class="form-control" type="text" wire:model="editedComment" />
                             <button class="mybutton" wire:click="updateComment({{ $comment->id }})">Save</button>
